@@ -41,6 +41,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Validate student is not already signed up
+  async function isStudentSignedUp(email, activity) {
+    try {
+      const response = await fetch(
+        `/activities/${encodeURIComponent(activity)}/is_signed_up?email=${encodeURIComponent(email)}`
+      );
+      const result = await response.json();
+      return result.signed_up;
+    } catch (error) {
+      console.error("Error checking signup status:", error);
+      return false;
+    }
+  }
+
   // Handle form submission
   signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
